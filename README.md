@@ -15,24 +15,11 @@ the underlying mechanics of blockchain technology.
 - [ ] REST API
 - [ ] Peer-to-peer networking
 
-## Project Structure
-
-src/
-├── main.rs # Entry point
-
-
-└── models/
-           ├── mod.rs # Module declarations
-           ├── transaction.rs # Transaction data structure
-           ├── block.rs # Block structure and SHA-256 hashing
-           └── blockchain.rs # Blockchain, mempool, PoW mining and validation
-
-
 ## Getting Started
 
 ### Prerequisites
 
-- Rust (stable) — install via [rustup.rs](https://rustup.rs)
+- Rust (stable) install via [rustup.rs](https://rustup.rs)
 
 ### Run
 
