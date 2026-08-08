@@ -19,3 +19,7 @@ log = "0.4"
 env_logger = "0.11"
 
 hex = "0.4"
+actix-web = "4"
+# partage de blockchain entre plusieurs threads de maniere secu
+tokio = {version = "1", features= ["full"]}
+

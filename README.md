@@ -12,7 +12,7 @@ the underlying mechanics of blockchain technology.
 - [x] Mempool (pending transactions pool)
 - [x] Proof of Work mining
 - [x] Chain validation (tamper detection)
-- [ ] REST API
+- [x] REST API
 - [ ] Peer-to-peer networking
 
 ## Getting Started
@@ -67,6 +67,30 @@ Each additional zero multiplies the average mining time by ~16.
 2. Each block's `previous_hash` matches the actual hash of the preceding block
 
 Any modification to a past block is immediately detectable.
+
+## REST API
+
+ Method  Endpoint        Description                              
+
+ GET     /status         Returns chain length and validity        
+ GET     /blocks         Returns all blocks in the chain          
+ POST    /transactions   Adds a transaction to the mempool        
+ POST    /mine           Mines a new block with pending transactions 
+
+### Example Usage
+
+```bash
+# Add a transaction
+curl -X POST http://127.0.0.1:8080/transactions \
+  -H "Content-Type: application/json" \
+  -d '{"sender": "Alice", "recipient": "Bob", "amount": 50.0}'
+
+# Mine a block
+curl -X POST http://127.0.0.1:8080/mine
+
+# Check the chain
+curl http://127.0.0.1:8080/blocks
+```
 
 ## Tech Stack
 

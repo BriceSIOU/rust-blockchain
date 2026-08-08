@@ -1,45 +1,34 @@
 mod models;
+mod api;
 
-use models::{Transaction, Block, Blockchain};
+use actix_web::{web, App, HttpServer};
+use api::{AppState, get_blocks, get_status, add_transaction, mine_block};
 
-fn main(){
+#[tokio::main]
+async fn main(){
     env_logger::init();
-    println!("====Creation of the blockchain====");
-    let mut blockchain = Blockchain::new(2);
+    println!("Demarrage de la blockchain...");
+    println!("Difficulte de mining: 2");
 
-    println!("\n ==== Add of transaction ====");
-    blockchain.add_transaction(Transaction::new("Brice".to_string(), 
-            "Bod".to_string(), 20.0));
-    
-    blockchain.add_transaction(Transaction::new("Bod".to_string(),
-            "Marie".to_string(),
-            10.0,
-            ));
-    println!("\n==== Mining of the second block ====");
-    blockchain.mine_pending_transactions();
+    // Arc Atomic Reference Counted
+    let state = web::Data::new(AppState::new(2));
+    println!("Serveur demarree sur http://127.0.0.1:8080");
 
-    println!("\n ==== State of the blockchain ====");
-    println!("Number of blocks: {}", blockchain.chain.len());
-    println!("Is blockchain valide: {}", if blockchain.is_valid(){"yes"} 
-        else {"No"});
-
-    println!("\n ==== Detail of the blockchain");
-    for block in &blockchain.chain{
-        println!(
-            "Block #{} | Nonce: {} | Hash: {}...{}",
-            block.index,
-            block.nonce,
-            &block.hash[..6],
-            &block.hash[58..]
-        );
-    }
-    blockchain.add_transaction(Transaction::new("Marie".to_string(),
-    "Brice".to_string(), 0.5,));
-    blockchain.mine_pending_transactions();
-
-    println!("\n ==== Test de falsification ====");
-    blockchain.chain[1].transactions[0].amount = 99999.0;
-    blockchain.chain[1].hash = blockchain.chain[1].calculate_hash();
-    println!("Blockchain valide apres falsification: {}", if blockchain.is_valid(){"yes"} 
-        else{"No"} );
+    // creation et demarage du serveur
+    HttpServer::new(move || {
+        //move transfere la propriete de state dans la closure
+        App::new()
+            // enregistre la propriete de state dans la closure
+       .app_data(state.clone())
+       // enregistre le routes
+       .service(get_blocks)
+       .service(get_status)
+       .service(add_transaction)
+       .service(mine_block)
+    })
+    .bind("127.0.0.1:8080")
+    .expect("Impossible de demarrer le serveur sur le port 8080")
+    .run()
+    .await
+    .expect("Erreur lors de l'execution du serveur");
 }
