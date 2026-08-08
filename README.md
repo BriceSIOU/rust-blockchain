@@ -1,7 +1,7 @@
 # rust-blockchain
 
 A blockchain implementation written from scratch in Rust, for educational purposes.
-Built without frameworks — every component is implemented manually to understand
+Built without framework. Every component is implemented manually to understand
 the underlying mechanics of blockchain technology.
 
 ## Features
@@ -19,11 +19,13 @@ the underlying mechanics of blockchain technology.
 
 src/
 ├── main.rs # Entry point
+
+
 └── models/
-├── mod.rs # Module declarations
-├── transaction.rs # Transaction data structure
-├── block.rs # Block structure and SHA-256 hashing
-└── blockchain.rs # Blockchain, mempool, PoW mining and validation
+           ├── mod.rs # Module declarations
+           ├── transaction.rs # Transaction data structure
+           ├── block.rs # Block structure and SHA-256 hashing
+           └── blockchain.rs # Blockchain, mempool, PoW mining and validation
 
 
 ## Getting Started
@@ -53,12 +55,12 @@ The `main.rs` demonstrates chain validation by:
 ### Block Structure
 
 Each block contains:
-- `index` — position in the chain
-- `timestamp` — Unix timestamp of creation
-- `transactions` — list of transactions included in the block
-- `previous_hash` — cryptographic link to the previous block
-- `hash` — SHA-256 hash of all block fields
-- `nonce` — number iterated during Proof of Work
+- `index`: position in the chain
+- `timestamp`:  Unix timestamp of creation
+- `transactions` : list of transactions included in the block
+- `previous_hash` : cryptographic link to the previous block
+- `hash` : SHA-256 hash of all block fields
+- `nonce`: number iterated during Proof of Work
 
 ### Proof of Work
 
@@ -82,11 +84,11 @@ Any modification to a past block is immediately detectable.
 ## Tech Stack
 
 - **Rust** 2024 edition
-- **sha2** — SHA-256 hashing
-- **serde / serde_json** — JSON serialization
-- **chrono** — timestamps
-- **uuid** — unique transaction IDs
-- **hex** — hexadecimal encoding
+- **sha2** : SHA-256 hashing
+- **serde / serde_json** : JSON serialization
+- **chrono** : timestamps
+- **uuid** : unique transaction IDs
+- **hex** : hexadecimal encoding
 
 ## Roadmap
 
